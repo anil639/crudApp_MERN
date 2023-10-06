@@ -69,4 +69,27 @@ app.delete("/delete/:taskId", async (req, res) => {
   }
 });
 
+app.put("/status/:taskId", async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const { completed } = req.body;
+
+    // Find the task by ID and update its 'completed' field
+    const updatedTask = await TaskList.findByIdAndUpdate(
+      taskId,
+      { completed },
+      { new: true } // Return the updated task
+    );
+
+    if (!updatedTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    res.json(updatedTask);
+  } catch (error) {
+    console.error("Error updating task:", error);
+    res.status(500).json({ error: "Error updating task" });
+  }
+});
+
 module.exports = app;

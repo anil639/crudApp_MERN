@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const taskRoutes = require("./Routes/taskListRoute");
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const port = process.env.PORT || 8000;
 
 // Connection to DB
